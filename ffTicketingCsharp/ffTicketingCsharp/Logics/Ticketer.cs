@@ -14,7 +14,7 @@ namespace ffTicketingCsharp
 
         private static uint BLOCK_SIZE = 13;
         private static uint SEAT_SIZE = 10;
-        private static int DELAY = 20;
+        private static int DELAY = 50;
 
         private enum TicketerState
         {

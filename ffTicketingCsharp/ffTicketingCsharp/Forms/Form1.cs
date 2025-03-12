@@ -26,6 +26,8 @@ namespace ffTicketingCsharp
         {
             base.OnLoad(e);
             WindowsHelper.RegisterHotKey(this.Handle, 1004, 0, (int)Keys.Escape);
+            _submitButton.Location = new Point(this.Right, this.Top);
+            _returnButton.Location = new Point(this.Right, _submitButton.Bottom);
         }
         protected override void WndProc(ref Message message)
         {

@@ -34,18 +34,18 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("맑은 고딕", 30F);
+            label1.Font = new Font("맑은 고딕", 15F);
             label1.Location = new Point(12, 18);
             label1.Name = "label1";
-            label1.Size = new Size(733, 54);
+            label1.Size = new Size(320, 28);
             label1.TabIndex = 0;
-            label1.Text = "이 창을 구역 돌아가기 버튼에 맞추세요";
+            label1.Text = "이 창을 새로고침 버튼에 맞추세요";
             // 
             // ReturnButton
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(354, 69);
             Controls.Add(label1);
             Name = "ReturnButton";
             Opacity = 0.6D;

@@ -34,10 +34,10 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("맑은 고딕", 36F);
-            label1.Location = new Point(20, 179);
+            label1.Font = new Font("맑은 고딕", 15F);
+            label1.Location = new Point(12, 20);
             label1.Name = "label1";
-            label1.Size = new Size(768, 65);
+            label1.Size = new Size(320, 28);
             label1.TabIndex = 0;
             label1.Text = "이 창을 선택완료 버튼에 맞추세요";
             // 
@@ -45,7 +45,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(357, 79);
             Controls.Add(label1);
             Name = "SubmitButton";
             Opacity = 0.6D;
