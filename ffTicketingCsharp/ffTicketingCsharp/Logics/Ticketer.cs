@@ -14,6 +14,7 @@ namespace ffTicketingCsharp
 
         private static uint BLOCK_SIZE = 13;
         private static uint SEAT_SIZE = 10;
+        private static int DELAY = 20;
 
         private enum TicketerState
         {
@@ -64,14 +65,13 @@ namespace ffTicketingCsharp
             var blocks = ScreenReader.FindColorblocks(screen, (int)BLOCK_SIZE);
             if (!blocks.Any())
             {
-                await Task.Delay(100);
                 _state = TicketerState.Rejected;
                 return;
             }
 
             var selectedBlock = blocks.Skip(_random.Next(blocks.Count())).First();
             WindowsHelper.Click(selectedBlock.Center().Add(_screenLoc));
-            await Task.Delay(100);
+            await Task.Delay(DELAY);
             _state = TicketerState.SelectedBlock;
         }
 
@@ -80,14 +80,13 @@ namespace ffTicketingCsharp
             var blocks = ScreenReader.FindColorblocks(screen, (int)SEAT_SIZE);
             if (!blocks.Any())
             {
-                await Task.Delay(100);
                 _state = TicketerState.Rejected;
                 return;
             }
 
             var selectedBlock = blocks.Skip(_random.Next(blocks.Count())).First();
             WindowsHelper.Click(selectedBlock.Center().Add(_screenLoc));
-            await Task.Delay(100);
+            //await Task.Delay(DELAY);
             _state = TicketerState.SelectedSeat;
         }
 
@@ -96,12 +95,11 @@ namespace ffTicketingCsharp
             var buttonScreen = ScreenReader.GetScreen(new Size(10, 10), _submitPoint);
             if (buttonScreen.GetPixel(0, 0).IsGraytone())
             {
-                await Task.Delay(100);
                 _state = TicketerState.Rejected;
                 return;
             }
             WindowsHelper.Click(_submitPoint);
-            await Task.Delay(100);
+            //await Task.Delay(DELAY);
             // if 이선좌 make it failed
             _state = TicketerState.Succeeded;
         }
