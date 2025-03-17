@@ -35,23 +35,19 @@ namespace ffTicketingCsharp
             _random = new Random(DateTime.Now.Millisecond);
         }
 
-        public async Task<bool> Loop()
+        public bool Loop()
         {
-            var screen = ScreenReader.GetScreen(_screenSize, _screenLoc);
 
             switch (_state)
             {
                 case TicketerState.Initialized:
-                    await OnInitialized(screen);
+                    OnInitialized();
                     break;
                 case TicketerState.SelectedBlock:
-                    await OnBlockSelect(screen);
-                    break;
-                case TicketerState.SelectedSeat:
-                    await OnSeatSelect(screen);
+                    OnSeatSelect();
                     break;
                 case TicketerState.Rejected:
-                    await OnRejected(screen);
+                    OnRejected();
                     break;
                 case TicketerState.Succeeded:
                     System.Media.SystemSounds.Asterisk.Play();
@@ -60,23 +56,9 @@ namespace ffTicketingCsharp
             return false;
         }
 
-        private async Task OnInitialized(Bitmap screen)
+        private void OnInitialized()
         {
-            var blocks = ScreenReader.FindColorblocks(screen, (int)BLOCK_SIZE);
-            if (!blocks.Any())
-            {
-                _state = TicketerState.Rejected;
-                return;
-            }
-
-            var selectedBlock = blocks.Skip(_random.Next(blocks.Count())).First();
-            WindowsHelper.Click(selectedBlock.Center().Add(_screenLoc));
-            await Task.Delay(DELAY);
-            _state = TicketerState.SelectedBlock;
-        }
-
-        private async Task OnBlockSelect(Bitmap screen)
-        {
+            var screen = ScreenReader.GetScreen(_screenSize, _screenLoc);
             var blocks = ScreenReader.FindColorblocks(screen, (int)SEAT_SIZE);
             if (!blocks.Any())
             {
@@ -86,16 +68,16 @@ namespace ffTicketingCsharp
 
             var selectedBlock = blocks.Skip(_random.Next(blocks.Count())).First();
             WindowsHelper.Click(selectedBlock.Center().Add(_screenLoc));
-            //await Task.Delay(DELAY);
-            _state = TicketerState.SelectedSeat;
+            Thread.Sleep(50);
+            _state = TicketerState.SelectedBlock;
         }
 
-        private async Task OnSeatSelect(Bitmap screen)
+        private void OnSeatSelect()
         {
             var buttonScreen = ScreenReader.GetScreen(new Size(10, 10), _submitPoint);
             if (buttonScreen.GetPixel(0, 0).IsGraytone())
             {
-                _state = TicketerState.Rejected;
+                OnInitialized();
                 return;
             }
             WindowsHelper.Click(_submitPoint);
@@ -104,10 +86,10 @@ namespace ffTicketingCsharp
             _state = TicketerState.Succeeded;
         }
 
-        private async Task OnRejected(Bitmap screen)
+        private void OnRejected()
         {
             WindowsHelper.Click(_returnPoint);
-            await Task.Delay(1000);
+            Thread.Sleep(500);
             _state = TicketerState.Initialized;
         }
     }

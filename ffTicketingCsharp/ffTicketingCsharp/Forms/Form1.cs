@@ -60,7 +60,7 @@ namespace ffTicketingCsharp
                 _cts = new CancellationTokenSource();
                 var looper = new Looper(new Ticketer(this.Size, this.Location, _returnButton.Center(), _submitButton.Center()), _cts.Token);
                 WindowState = FormWindowState.Minimized;
-                _ = looper.Loop();
+                _ = Task.Run(() => looper.Loop());
             }
         }
     }

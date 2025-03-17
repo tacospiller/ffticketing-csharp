@@ -23,7 +23,7 @@
 
             while (!_token.IsCancellationRequested)
             {
-                var result = await _actor.Loop();
+                var result = _actor.Loop();
                 if (result)
                 {
                     return;

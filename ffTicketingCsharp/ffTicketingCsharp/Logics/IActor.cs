@@ -2,6 +2,6 @@
 {
     internal interface IActor
     {
-        Task<bool> Loop();
+        bool Loop();
     }
 }
